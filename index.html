@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -26,25 +27,27 @@
             --text-secondary-color: #9ca3af; --border-color: #374151;
         }
         /* Base styles */
-        body { font-family: 'Cairo', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background-color 0.3s, color 0.3s; cursor: none; overflow-x: hidden;}
+        body { font-family: 'Cairo', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background-color 0.3s, color 0.3s; overflow-x: hidden;}
         .text-primary { color: var(--primary-color); } .bg-primary { background-color: var(--primary-color); }
         .bg-secondary { background-color: var(--bg-secondary-color); }
         
-        /* Preloader Redesign v2 */
-        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); z-index: 10000; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1.5rem; transition: opacity 0.8s ease-out 0.5s, visibility 0.8s ease-out 0.5s; }
+        /* Preloader Design - Fixed */
+        #preloader { position: fixed; inset: 0; background-color: var(--bg-color); z-index: 10000; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
         #preloader.loaded { opacity: 0; visibility: hidden; }
-        .loader-logo-a { width: 100px; height: 100px; opacity: 0; animation: fadeIn 1s ease-out forwards; }
-        .loader-logo-a .logo-path-a { stroke: var(--primary-color); stroke-width: 8; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 250; stroke-dashoffset: 250; animation: draw-logo-a 2s ease-in-out 0.5s forwards; }
-        .preloader-text-a { font-size: 1.5rem; font-weight: 700; color: var(--text-color); opacity: 0; animation: fadeInUp 1s ease-out 1.5s forwards; }
-        #preloader-progress-bar-container { width: 150px; height: 4px; background-color: var(--border-color); border-radius: 2px; overflow: hidden; opacity: 0; animation: fadeIn 1s ease-out 0.5s forwards; }
-        #preloader-progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, var(--primary-color), var(--primary-hover-color)); border-radius: 2px; animation: fill-progress 2s ease-in-out 0.5s forwards; }
-        @keyframes fadeIn { to { opacity: 1; } }
-        @keyframes draw-logo-a { to { stroke-dashoffset: 0; } }
-        @keyframes fill-progress { from { width: 0%; } to { width: 100%; } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .preloader-content { text-align: center; max-width: 90%; padding: 20px;}
+        #typing-container { display: inline-block; position: relative; }
+        #typing-text { color: var(--text-color); font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; min-height: 70px; text-align: right; }
+        #typing-container::after {
+            content: ''; position: absolute; top: 10%; bottom: 10%; left: -0.2em;
+            width: 0.15em; background: var(--primary-color); animation: blink-caret .75s step-end infinite;
+        }
+        @keyframes blink-caret { from, to { background-color: transparent; } 50% { background-color: var(--primary-color); } }
+        .preloader-progress-container { width: 100%; max-width: 400px; height: 6px; background-color: var(--border-color); border-radius: 3px; overflow: hidden; margin: 0 auto; }
+        .preloader-progress-bar { width: 0%; height: 100%; background: var(--primary-color); border-radius: 3px; transition: width 3.5s ease-in-out; }
+        #preloader.loaded .preloader-progress-bar { width: 100%; }
 
-        /* Cursor, Scrollbar */
-        .cursor { width: 25px; height: 25px; border: 2px solid var(--primary-color); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: all 0.1s ease-out; }
+
+        /* Scrollbar */
         #scroll-progress-bar { position: fixed; top: 0; right: 0; height: 3px; background-color: var(--primary-color); width: 0%; z-index: 100; }
         
         /* Header */
@@ -66,6 +69,26 @@
         input:checked + .slider .fa-moon { opacity: 1; }
         input:checked + .slider .fa-sun { opacity: 0; }
         
+        /* Glowing Logo - Static Image, Animated Border */
+        .glowing-logo {
+            width: 320px; height: 320px; position: relative;
+            margin: 0 auto; max-width: 70vw; max-height: 70vw;
+        }
+        .glowing-logo::before {
+            content: ''; position: absolute; inset: 0; border-radius: 50%;
+            background: conic-gradient(from 0deg, #ff2a2a, #ff7a2a, #f0ff2a, #2aff9d, #2a7fff, #a22aff, #ff2a2a);
+            animation: rotate-glow 4s linear infinite;
+        }
+        @keyframes rotate-glow {
+            from { transform: rotate(0deg); } to { transform: rotate(360deg); }
+        }
+        .glowing-logo-inner {
+            position: absolute; inset: 20px; background-color: #000000; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; text-align: center;
+            color: #f9fafb; font-family: 'Amiri', serif; font-size: 2.2rem;
+            font-weight: 700; line-height: 1.4;
+        }
+
         /* Hero section and background */
         #bg-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
         #hero > div { z-index: 2; position: relative; }
@@ -74,10 +97,22 @@
         .g-title { display: block; overflow: hidden;}
         .g-title .word { transform: translateY(115%); transition: transform .5s; display: inline-block; padding-left: 4px;}
 
-        /* Chatbot Redesign */
+        /* Chatbot Redesign (with fixed position) */
         #chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
-        #chat-bubble { width: 60px; height: 60px; background: linear-gradient(45deg, var(--primary-color), var(--primary-hover-color)); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 5px 20px rgba(13, 148, 136, 0.4); animation: bubble-pulse 2.5s infinite; transition: transform 0.3s ease; }
-        @keyframes bubble-pulse { 0%, 100% { transform: scale(1); box-shadow: 0 5px 20px rgba(13, 148, 136, 0.4); } 50% { transform: scale(1.05); box-shadow: 0 8px 30px rgba(13, 148, 136, 0.6); } }
+        #chat-bubble { 
+            width: 60px; height: 60px; background: linear-gradient(45deg, var(--primary-color), var(--primary-hover-color)); 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; 
+            box-shadow: 0 5px 20px rgba(13, 148, 136, 0.4); transition: transform 0.3s ease;
+            animation: bubble-pulse 2s infinite, bubble-jiggle 8s infinite;
+        }
+        @keyframes bubble-pulse { 
+            0%, 100% { transform: scale(1); box-shadow: 0 5px 20px rgba(13, 148, 136, 0.4); } 
+            50% { transform: scale(1.05); box-shadow: 0 8px 30px rgba(13, 148, 136, 0.6); } 
+        }
+        @keyframes bubble-jiggle {
+            0%, 2%, 100% { transform: rotate(0deg); } 0.5% { transform: rotate(5deg); }
+            1% { transform: rotate(-5deg); } 1.5% { transform: rotate(5deg); }
+        }
         #chat-bubble:hover { transform: scale(1.15) rotate(10deg); animation-play-state: paused; }
         #chat-window { position: absolute; bottom: 80px; right: 0; width: 370px; max-width: 90vw; height: 550px; max-height: 75vh; background-color: var(--bg-secondary-color); border: 1px solid var(--border-color); border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; transform-origin: bottom right; transform: scale(0.5); opacity: 0; pointer-events: none; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; }
         #chat-window.open { transform: scale(1); opacity: 1; pointer-events: auto; }
@@ -106,20 +141,16 @@
     </style>
 </head>
 <body>
-    <!-- This is the main body of the website -->
-    <div id="scroll-progress-bar"></div>
     <div id="preloader">
-        <div class="loader-logo-a">
-            <svg viewBox="0 0 100 100">
-                <path class="logo-path-a" d="M20,80 L50,20 L80,80 M32,65 L68,65"></path>
-            </svg>
+        <div class="preloader-content">
+            <div id="typing-container">
+                <h1 id="typing-text"></h1>
+            </div>
+            <div class="preloader-progress-container">
+                <div class="preloader-progress-bar"></div>
+            </div>
         </div>
-        <div id="preloader-progress-bar-container">
-            <div id="preloader-progress-bar"></div>
-        </div>
-        <div class="preloader-text-a">أ.د. عطية الفرجاني</div>
     </div>
-    <div class="cursor"></div>
 
     <header class="bg-secondary/80 backdrop-blur-sm shadow-md fixed top-0 left-0 right-0 z-50">
         <div class="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
@@ -161,22 +192,24 @@
     </header>
 
     <main>
-        <!-- Hero Section -->
         <section id="hero" class="min-h-screen flex items-center bg-secondary relative overflow-hidden">
             <canvas id="bg-canvas"></canvas>
             <div class="container mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-7xl font-black leading-tight reveal">أنا الأستاذ الدكتور <span class="text-primary">عطية الفرجاني</span></h1>
+                <h1 class="text-4xl md:text-7xl font-black leading-tight reveal">الأستاذ الدكتور <span class="text-primary">عطية الفرجاني</span></h1>
                 <p class="text-xl md:text-3xl mt-4 text-text-secondary-color reveal" data-delay="0.2">باحث وأكاديمي متخصص في هندسة القوى الكهربائية.</p>
             </div>
         </section>
 
-        <!-- About Section -->
         <section id="about" class="py-24 bg-color">
              <div class="container mx-auto px-6">
                 <div class="text-center mb-16"> <h2 class="text-4xl font-bold g-title" data-text="مسيرة علمية حافلة"></h2> </div>
                 <div class="flex flex-col lg:flex-row items-center gap-12">
-                    <div class="lg:w-1/2 reveal">
-                        <img src="https://i1.rgstatic.net/ii/profile.image/272311438188554-1441935634812_Q512/Attia-El-Fergany.jpg" alt="الأستاذ الدكتور عطية الفرجاني" class="rounded-lg shadow-2xl mx-auto w-full max-w-md object-cover">
+                    <div class="lg:w-1/2 reveal flex items-center justify-center">
+                        <div class="glowing-logo">
+                           <div class="glowing-logo-inner">
+                                <span>Dr. Attia<br>El_Fergany</span>
+                           </div>
+                        </div>
                     </div>
                     <div class="lg:w-1/2 text-center lg:text-right reveal" data-delay="0.2">
                         <p class="text-xl leading-relaxed mb-6">الأستاذ الدكتور عطية الفرجاني هو شخصية أكاديمية وبحثية بارزة في مجال هندسة القوى الكهربائية في مصر والعالم. يشغل حاليًا منصب أستاذ ورئيس قسم هندسة القوى والآلات الكهربية بكلية الهندسة، جامعة الزقازيق. يُعرف بإسهاماته البحثية الغزيرة، خاصة في مجال تطبيق التقنيات الذكية لتحسين أداء أنظمة القوى الكهربائية، وقد تم تصنيفه ضمن أفضل 2% من العلماء الأكثر تأثيرًا على مستوى العالم وفقًا لتصنيف جامعة ستانفورد لعدة سنوات متتالية.</p>
@@ -185,7 +218,6 @@
             </div>
         </section>
         
-        <!-- Services/Research Interests Section -->
         <section id="services" class="py-24 bg-secondary">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16"> <h2 class="text-4xl font-bold g-title" data-text="الاهتمامات البحثية"></h2> </div>
@@ -193,11 +225,10 @@
             </div>
         </section>
         
-        <!-- Contact Section -->
         <section id="contact" class="py-24 bg-color">
              <div class="container mx-auto px-6 text-center">
                  <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold g-title mb-4" data-text="للتواصل العلمي والأكاديمي"></h2>
+                    <h2 class="text-4xl font-bold g-title mb-4" data-text="للتواصل"></h2>
                     <p class="text-lg text-text-secondary-color mt-4 reveal" data-delay="0.2">للاستفسارات البحثية أو التعاون الأكاديمي، يمكنكم التواصل عبر القنوات التالية.</p>
                 </div>
                 <div class="flex flex-col md:flex-row justify-center items-center gap-6 reveal" data-delay="0.4">
@@ -220,7 +251,6 @@
     
     <footer class="bg-gray-900 text-gray-400 py-6"><div class="container mx-auto px-6 text-center"><p>© 2024 | جميع الحقوق محفوظة | <span class="font-bold text-primary">أ.د. عطية الفرجاني</span></p></div></footer>
     
-    <!-- Chatbot Widget -->
     <div id="chat-widget">
         <div id="chat-window">
             <div id="chat-header">
@@ -242,16 +272,49 @@ document.addEventListener('DOMContentLoaded', () => {
     // This script is responsible for all the dynamic functionality of the website.
     const docHtml = document.documentElement;
 
-    // --- Preloader ---
+    // --- Preloader Logic ---
     const preloader = document.getElementById('preloader');
-    setTimeout(() => {
-        if (preloader) preloader.classList.add('loaded');
-    }, 2800); // Adjusted duration for new animation
+    const typingElement = document.getElementById('typing-text');
+    const typingContainer = document.getElementById('typing-container');
+    const progressBar = document.querySelector('.preloader-progress-bar');
+    const sentence = "أهلاً بك في موقع الأستاذ الدكتور عطية الفرجاني";
+    const typingDelay = 80; // ms
+    const preloaderDuration = (sentence.length * typingDelay) + 1000; // Total time
+
+    function typeSentence() {
+        let i = 0;
+        typingElement.innerHTML = "";
+        const intervalId = setInterval(() => {
+            if (i < sentence.length) {
+                typingElement.innerHTML += sentence.charAt(i);
+                i++;
+            } else {
+                clearInterval(intervalId);
+                // Hide cursor after typing
+                if (typingContainer) typingContainer.style.setProperty('--fa-secondary-color', 'transparent');
+                 if (typingContainer) typingContainer.style.setProperty('border-right', 'none');
+            }
+        }, typingDelay);
+    }
+    
+    if(preloader && typingElement && progressBar) {
+        // Start typing animation
+        typeSentence();
+        // Start progress bar animation (using CSS transition now)
+        setTimeout(() => {
+            progressBar.style.width = '100%';
+        }, 100);
+
+        // Hide preloader after everything is done
+        setTimeout(() => {
+            preloader.classList.add('loaded');
+        }, preloaderDuration);
+    }
 
     // --- Header Features ---
     const clockEl = document.getElementById('rgb-clock');
     const mobileClockEl = document.getElementById('mobile-rgb-clock');
-    const progressBar = document.getElementById('scroll-progress-bar');
+    const scrollProgressBar = document.getElementById('scroll-progress-bar');
 
     function updateHeader() {
         const now = new Date();
@@ -260,9 +323,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (clockEl) clockEl.textContent = timeString;
         if (mobileClockEl) mobileClockEl.textContent = timeString;
         
-        if (progressBar) {
+        if (scrollProgressBar) {
             const scrollTotal = docHtml.scrollHeight - docHtml.clientHeight;
-            progressBar.style.width = `${(window.scrollY / scrollTotal) * 100}%`;
+            scrollProgressBar.style.width = `${(window.scrollY / scrollTotal) * 100}%`;
         }
     }
     setInterval(updateHeader, 1000);
@@ -375,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
         input: document.getElementById('chat-input'),
         sendBtn: document.getElementById('chat-send-btn'),
         quickReplies: document.getElementById('chat-quick-replies'),
-        apiKey: 'AIzaSyD39lIpfEjoPYM6NcOxWtM3pQym9ZrkXfo', // The provided Gemini API Key
+        apiKey: 'AIzaSyD39lIpfEjoPYM6NcOxWtM3pQym9ZrkXfo', 
         history: [], 
 
         init() {
@@ -416,7 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const textContent = `<div>${marked.parse(content)}</div>`;
                 div.innerHTML = avatar + textContent;
             } else {
-                // For user messages, we just set the text content
                 div.textContent = content;
             }
             this.messages.appendChild(div);
@@ -475,9 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.messages.removeChild(loadingDiv);
                 this.addMessage("عفواً، حدث خطأ فني. يرجى المحاولة مرة أخرى لاحقًا.", 'ai');
             } finally {
-                // Show new, more relevant quick replies after a response
                 this.showQuickReplies(["حدثني عن تصنيف ستانفورد", "ما هي أبرز منشوراته؟", "كيف يمكن التعاون معه بحثياً؟"]);
-                // Keep history concise
                 if (this.history.length > 10) {
                     this.history = this.history.slice(-10); 
                 }
