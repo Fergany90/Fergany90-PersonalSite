@@ -3,51 +3,47 @@ import { v } from "convex/values";
 import { authTables } from "@convex-dev/auth/server";
 
 const applicationTables = {
-  // جدول الطلاب
   students: defineTable({
     name: v.string(),
     phone: v.string(),
     accessCode: v.string(),
     isActive: v.boolean(),
     createdAt: v.number(),
-  })
-    .index("by_access_code", ["accessCode"])
-    .index("by_phone", ["phone"]),
+  }).index("by_phone", ["phone"])
+    .index("by_access_code", ["accessCode"]),
 
-  // جدول الملفات المرفوعة
   files: defineTable({
     title: v.string(),
     description: v.optional(v.string()),
     fileId: v.id("_storage"),
-    fileType: v.string(), // video, image, document
-    fileName: v.string(),
-    fileSize: v.number(),
-    uploadedBy: v.id("users"), // المدرس الذي رفع الملف
+    fileType: v.union(v.literal("video"), v.literal("image"), v.literal("document")),
+    mimeType: v.string(),
+    size: v.number(),
+    uploadedBy: v.string(), // teacher identifier
     uploadedAt: v.number(),
     isPublic: v.boolean(),
-  })
-    .index("by_uploaded_by", ["uploadedBy"])
-    .index("by_type", ["fileType"])
+    tags: v.optional(v.array(v.string())),
+  }).index("by_type", ["fileType"])
     .index("by_upload_date", ["uploadedAt"]),
 
-  // جدول تسجيل دخول الطلاب
-  studentSessions: defineTable({
-    studentId: v.id("students"),
-    accessCode: v.string(),
-    loginAt: v.number(),
-    isActive: v.boolean(),
-  })
-    .index("by_student", ["studentId"])
-    .index("by_access_code", ["accessCode"]),
-
-  // جدول تحميل الملفات (لتتبع من حمل ماذا)
   downloads: defineTable({
-    fileId: v.id("files"),
     studentId: v.id("students"),
+    fileId: v.id("files"),
     downloadedAt: v.number(),
-  })
-    .index("by_file", ["fileId"])
-    .index("by_student", ["studentId"]),
+  }).index("by_student", ["studentId"])
+    .index("by_file", ["fileId"]),
+
+  aiChats: defineTable({
+    studentId: v.id("students"),
+    message: v.string(),
+    response: v.string(),
+    timestamp: v.number(),
+  }).index("by_student", ["studentId"]),
+
+  settings: defineTable({
+    key: v.string(),
+    value: v.string(),
+  }).index("by_key", ["key"]),
 };
 
 export default defineSchema({

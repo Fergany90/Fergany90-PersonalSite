@@ -1,61 +1,42 @@
+import { query, mutation, internalMutation } from "./_generated/server";
 import { v } from "convex/values";
-import { query, mutation } from "./_generated/server";
-import { getAuthUserId } from "@convex-dev/auth/server";
 
-// دالة لتوليد كود عشوائي من 6 أرقام
+// Generate 6-digit access code
 function generateAccessCode(): string {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
-// إضافة طالب جديد (للمدرس فقط)
-export const addStudent = mutation({
+export const createStudent = mutation({
   args: {
     name: v.string(),
     phone: v.string(),
   },
   handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
-    if (!userId) {
-      throw new Error("يجب تسجيل الدخول أولاً");
-    }
-
-    // التحقق من عدم وجود الطالب مسبقاً
+    // Check if student already exists
     const existingStudent = await ctx.db
       .query("students")
       .withIndex("by_phone", (q) => q.eq("phone", args.phone))
       .first();
 
     if (existingStudent) {
-      throw new Error("هذا الرقم مسجل مسبقاً");
+      throw new Error("طالب مسجل بهذا الرقم من قبل");
     }
 
-    // توليد كود وصول فريد
-    let accessCode: string;
-    let codeExists = true;
+    const accessCode = generateAccessCode();
     
-    while (codeExists) {
-      accessCode = generateAccessCode();
-      const existing = await ctx.db
-        .query("students")
-        .withIndex("by_access_code", (q) => q.eq("accessCode", accessCode))
-        .first();
-      codeExists = !!existing;
-    }
-
     const studentId = await ctx.db.insert("students", {
       name: args.name,
       phone: args.phone,
-      accessCode: accessCode!,
+      accessCode,
       isActive: true,
       createdAt: Date.now(),
     });
 
-    return { studentId, accessCode: accessCode! };
+    return { studentId, accessCode };
   },
 });
 
-// تسجيل دخول الطالب بالكود
-export const loginWithCode = mutation({
+export const loginStudent = mutation({
   args: {
     accessCode: v.string(),
   },
@@ -66,50 +47,24 @@ export const loginWithCode = mutation({
       .first();
 
     if (!student || !student.isActive) {
-      throw new Error("كود الوصول غير صحيح أو غير مفعل");
+      throw new Error("كود الدخول غير صحيح أو الحساب غير مفعل");
     }
-
-    // إنشاء جلسة جديدة
-    await ctx.db.insert("studentSessions", {
-      studentId: student._id,
-      accessCode: args.accessCode,
-      loginAt: Date.now(),
-      isActive: true,
-    });
 
     return student;
   },
 });
 
-// الحصول على قائمة الطلاب (للمدرس فقط)
-export const getStudents = query({
-  args: {},
+export const getAllStudents = query({
   handler: async (ctx) => {
-    const userId = await getAuthUserId(ctx);
-    if (!userId) {
-      throw new Error("يجب تسجيل الدخول أولاً");
-    }
-
-    const students = await ctx.db
-      .query("students")
-      .order("desc")
-      .collect();
-
-    return students;
+    return await ctx.db.query("students").order("desc").collect();
   },
 });
 
-// تفعيل/إلغاء تفعيل طالب
 export const toggleStudentStatus = mutation({
   args: {
     studentId: v.id("students"),
   },
   handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
-    if (!userId) {
-      throw new Error("يجب تسجيل الدخول أولاً");
-    }
-
     const student = await ctx.db.get(args.studentId);
     if (!student) {
       throw new Error("الطالب غير موجود");
@@ -123,17 +78,46 @@ export const toggleStudentStatus = mutation({
   },
 });
 
-// التحقق من صحة كود الوصول
-export const verifyAccessCode = query({
+export const regenerateAccessCode = mutation({
   args: {
-    accessCode: v.string(),
+    studentId: v.id("students"),
   },
   handler: async (ctx, args) => {
-    const student = await ctx.db
-      .query("students")
-      .withIndex("by_access_code", (q) => q.eq("accessCode", args.accessCode))
-      .first();
+    const newAccessCode = generateAccessCode();
+    
+    await ctx.db.patch(args.studentId, {
+      accessCode: newAccessCode,
+    });
 
-    return student && student.isActive ? student : null;
+    return newAccessCode;
+  },
+});
+
+export const getChatHistory = query({
+  args: {
+    studentId: v.id("students"),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("aiChats")
+      .withIndex("by_student", (q) => q.eq("studentId", args.studentId))
+      .order("desc")
+      .take(50);
+  },
+});
+
+export const saveChatInternal = internalMutation({
+  args: {
+    studentId: v.id("students"),
+    message: v.string(),
+    response: v.string(),
+  },
+  handler: async (ctx, args) => {
+    await ctx.db.insert("aiChats", {
+      studentId: args.studentId,
+      message: args.message,
+      response: args.response,
+      timestamp: Date.now(),
+    });
   },
 });

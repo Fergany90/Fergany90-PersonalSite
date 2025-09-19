@@ -30,14 +30,134 @@ body {
     "Noto Color Emoji";
   color: var(--color-dark);
   background: var(--color-light);
+  direction: rtl;
 }
 
-/* only use this to update the style of the auth input fields. use a different class for all other input fields */
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #2563eb, #7c3aed);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Custom button styles */
+.btn-gradient {
+  @apply bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl;
+}
+
+/* File upload area */
+.upload-area {
+  @apply border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 transition-colors;
+}
+
+.upload-area.dragover {
+  @apply border-blue-500 bg-blue-50;
+}
+
+/* Chat messages */
+.chat-message {
+  @apply max-w-xs lg:max-w-md px-4 py-3 rounded-2xl text-sm;
+}
+
+.chat-message.user {
+  @apply bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-br-sm ml-auto;
+}
+
+.chat-message.ai {
+  @apply bg-gray-100 text-gray-800 rounded-bl-sm mr-auto;
+}
+
+/* Loading spinner */
+.spinner {
+  @apply animate-spin rounded-full border-b-2 border-blue-600;
+}
+
+/* Card hover effects */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
+}
+
+/* Status badges */
+.status-active {
+  @apply bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold;
+}
+
+.status-inactive {
+  @apply bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-semibold;
+}
+
+/* File type icons */
+.file-icon {
+  @apply w-12 h-12 rounded-lg flex items-center justify-center text-2xl;
+}
+
+.file-icon.video {
+  @apply bg-red-100 text-red-600;
+}
+
+.file-icon.image {
+  @apply bg-green-100 text-green-600;
+}
+
+.file-icon.document {
+  @apply bg-blue-100 text-blue-600;
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  .container {
+    @apply px-4;
+  }
+  
+  .grid-responsive {
+    @apply grid-cols-1;
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-responsive {
+    @apply grid-cols-2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-responsive {
+    @apply grid-cols-3;
+  }
+}
+
+/* Auth input and button styles */
 .auth-input-field {
   @apply w-full px-4 py-3 rounded-container bg-white border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-shadow shadow-sm hover:shadow;
 }
 
-/* only use this to update the style of the auth buttons. use the button class for all other buttons */
 .auth-button {
   @apply w-full px-4 py-3 rounded bg-primary text-white font-semibold hover:bg-primary-hover transition-colors shadow-sm hover:shadow disabled:opacity-50 disabled:cursor-not-allowed;
 }
