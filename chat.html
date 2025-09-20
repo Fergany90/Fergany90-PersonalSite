@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدردشة الذكية - Fergany AI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="chat-body">
+
+    <div class="chat-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar left-sidebar">
+            <div class="user-profile">
+                <h2 id="user-name-display">مستخدم</h2>
+                <span id="premium-status-badge" class="badge">عادي</span>
+            </div>
+            <button id="new-chat-btn" class="new-chat-btn"><i class="fas fa-plus"></i> محادثة جديدة</button>
+            <nav class="chat-history">
+                <h3>المحادثات السابقة</h3>
+                <ul id="chat-history-list">
+                    <!-- Chat history items will be loaded here -->
+                </ul>
+            </nav>
+            <button id="chat-logout-btn" class="logout-btn bottom-btn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-area">
+            <header class="chat-header-main">
+                <h3>Fergany AI</h3>
+            </header>
+            <div id="chat-window" class="chat-window">
+                <!-- Messages will appear here -->
+                <div class="message ai-message">
+                    <p>مرحباً بك! أنا مساعدك الذكي. كيف يمكنني مساعدتك اليوم؟</p>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <div class="chat-input-wrapper">
+                    <textarea id="chat-input" placeholder="اكتب رسالتك هنا..." rows="1"></textarea>
+                    <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar (Premium) -->
+        <aside class="sidebar right-sidebar">
+            <div class="premium-section">
+                <h3><i class="fas fa-star"></i> لوحة الميزات المميزة</h3>
+                
+                <div id="tts-premium-feature" class="premium-feature">
+                    <h4><i class="fas fa-volume-up"></i> تحويل النص إلى صوت (TTS)</h4>
+                    <p>حوّل أي نص إلى خطاب صوتي طبيعي وقم بتنزيله.</p>
+                    <textarea id="tts-input" placeholder="اكتب النص هنا..."></textarea>
+                    <button id="generate-audio-btn"><i class="fas fa-cogs"></i> إنشاء الصوت</button>
+                    <div id="audio-output"></div>
+                </div>
+
+                <div id="code-premium-feature" class="premium-feature">
+                    <h4><i class="fas fa-code"></i> كتابة الأكواد البرمجية</h4>
+                    <p>اطلب مني كتابة أي كود برمجي تحتاجه في أي لغة.</p>
+                </div>
+
+                <div id="not-premium-message" class="not-premium-message">
+                    <h4><i class="fas fa-lock"></i> الميزات مقفلة</h4>
+                    <p>هذه الميزات حصرية للأعضاء المميزين (Premium).</p>
+                    <p>لترقية حسابك، <a href="https://wa.me/201225860308" target="_blank">تواصل مع المطور</a>.</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Floating Contact Icon -->
+    <a href="https://wa.me/201225860308" class="floating-contact-btn" target="_blank" title="تواصل مع المطور">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script type="module" src="js/chat.js"></script>
+</body>
+</html>

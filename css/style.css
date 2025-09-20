@@ -1,0 +1,582 @@
+/* --- General Styles --- */
+:root {
+    --primary-color: #00aaff;
+    --secondary-color: #00ffaa;
+    --dark-bg: #121212;
+    --light-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+    --error-color: #ff4d4d;
+    --font-family: 'Cairo', sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    background: var(--dark-bg);
+    color: var(--text-color);
+    margin: 0;
+    direction: rtl;
+}
+
+/* --- Login Page Styles --- */
+.login-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    margin: auto;
+}
+
+.login-box {
+    background: var(--light-bg);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0, 170, 255, 0.2);
+    border: 1px solid var(--primary-color);
+    text-align: center;
+    width: 100%;
+}
+
+.logo-container h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+.logo-container p {
+    margin-bottom: 30px;
+    color: var(--text-color);
+}
+
+.toggle-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    background: var(--dark-bg);
+    border-radius: 25px;
+    padding: 5px;
+}
+
+.toggle-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: var(--font-family);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.toggle-btn.active {
+    background: var(--primary-color);
+    color: var(--dark-bg);
+    font-weight: 700;
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-input {
+    background: var(--dark-bg);
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    color: var(--text-color);
+    font-size: 1rem;
+    text-align: center;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.login-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
+}
+
+.login-btn {
+    background: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    padding: 15px;
+    color: var(--dark-bg);
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+    font-family: var(--font-family);
+}
+
+.login-btn:hover {
+    background: var(--secondary-color);
+    box-shadow: 0 0 15px var(--secondary-color);
+}
+
+.support-text {
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+.support-text a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.error-text {
+    color: var(--error-color);
+    margin-top: 15px;
+    height: 20px;
+    font-weight: 600;
+}
+
+/* --- Admin Panel Styles --- */
+.admin-container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background: var(--light-bg);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 25px rgba(0, 170, 255, 0.2);
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.admin-header h1 {
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.logout-btn {
+    background: var(--error-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-weight: 600;
+}
+
+.admin-nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.nav-tab {
+    background: var(--dark-bg);
+    color: var(--text-color);
+    border: 1px solid #333;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-size: 1rem;
+}
+
+.nav-tab.active {
+    background: var(--primary-color);
+    color: var(--dark-bg);
+    font-weight: 700;
+    border-color: var(--primary-color);
+}
+
+.admin-section {
+    display: none;
+}
+
+.admin-section.active {
+    display: block;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.action-btn {
+    background: var(--primary-color);
+    color: var(--dark-bg);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.action-btn:hover {
+    background: var(--secondary-color);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.members-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.members-table th, .members-table td {
+    padding: 15px;
+    border-bottom: 1px solid #333;
+}
+
+.members-table thead {
+    background: var(--dark-bg);
+}
+
+.members-table th {
+    color: var(--primary-color);
+}
+
+.premium-toggle {
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.action-icon {
+    cursor: pointer;
+    margin: 0 8px;
+    font-size: 1.2rem;
+}
+
+.action-icon.edit { color: var(--secondary-color); }
+.action-icon.delete { color: var(--error-color); }
+.action-icon.ban { color: #ffc107; }
+.action-icon.warn { color: #17a2b8; }
+
+
+/* Modal Styles */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.7);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: var(--light-bg);
+    padding: 30px;
+    border: 1px solid var(--primary-color);
+    width: 80%;
+    max-width: 500px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.close-btn {
+    color: #aaa;
+    float: left;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: var(--error-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content input {
+    width: calc(100% - 40px);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: var(--dark-bg);
+    color: var(--text-color);
+    font-family: var(--font-family);
+}
+
+/* Announcement Styles */
+.announcement-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.announcement-form input, .announcement-form textarea {
+    width: calc(100% - 30px);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: var(--dark-bg);
+    color: var(--text-color);
+    font-family: var(--font-family);
+}
+
+.announcement-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+#announcements-list .announcement-item {
+    background: var(--dark-bg);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-right: 4px solid var(--primary-color);
+}
+
+#announcements-list .announcement-item h3 {
+    margin: 0 0 10px 0;
+}
+
+#announcements-list .announcement-item p {
+    margin: 0 0 10px 0;
+}
+
+#announcements-list .announcement-item small {
+    color: #aaa;
+}
+
+#announcements-list .announcement-item .announcement-actions {
+    text-align: left;
+}
+
+#announcements-list .announcement-item .announcement-actions button {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 1rem;
+}
+
+#announcements-list .announcement-item .announcement-actions button.delete {
+    color: var(--error-color);
+}
+
+i.fas {
+    margin-left: 8px;
+}
+
+/* --- Chat Page Styles --- */
+.chat-body { overflow: hidden; height: 100vh; }
+.chat-container {
+    display: grid;
+    grid-template-columns: 280px 1fr 320px;
+    height: 100vh;
+    width: 100%;
+}
+
+.sidebar {
+    background-color: var(--light-bg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
+}
+
+.left-sidebar .user-profile {
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #333;
+}
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+#premium-status-badge.badge-premium {
+    background-color: var(--secondary-color);
+    color: var(--dark-bg);
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+
+#premium-status-badge.badge-standard {
+    background-color: #444;
+    color: var(--text-color);
+}
+
+.new-chat-btn {
+    background: var(--primary-color);
+    color: var(--dark-bg);
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 1rem;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.chat-history { flex-grow: 1; overflow-y: auto; }
+.chat-history h3 { font-size: 1rem; color: #888; }
+.chat-history ul { list-style: none; padding: 0; margin: 0; }
+.chat-history li {
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.chat-history li:hover { background-color: #2a2a2a; }
+.chat-history li.active { background-color: var(--primary-color); color: var(--dark-bg); font-weight: 700; }
+
+.bottom-btn { margin-top: auto; }
+
+.chat-area {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--dark-bg);
+}
+
+.chat-header-main { padding: 20px; text-align: center; border-bottom: 1px solid #333; }
+.chat-header-main h3 { margin: 0; font-size: 1.5rem; color: var(--primary-color); }
+
+.chat-window {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.user-message {
+    background-color: var(--primary-color);
+    color: var(--dark-bg);
+    border-bottom-right-radius: 0;
+    align-self: flex-end;
+}
+
+.ai-message {
+    background-color: var(--light-bg);
+    border-bottom-left-radius: 0;
+    align-self: flex-start;
+}
+
+.chat-input-area {
+    padding: 20px;
+    border-top: 1px solid #333;
+}
+
+.chat-input-wrapper {
+    display: flex;
+    background-color: var(--light-bg);
+    border-radius: 25px;
+    padding: 5px 15px;
+    align-items: center;
+}
+
+#chat-input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    resize: none;
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+#chat-input:focus { outline: none; }
+
+#send-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.right-sidebar .premium-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.premium-feature, .not-premium-message {
+    background-color: var(--dark-bg);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #333;
+}
+
+.premium-feature h4, .not-premium-message h4 { color: var(--secondary-color); margin-top: 0; }
+.premium-feature textarea { width: 100%; box-sizing: border-box; min-height: 80px; }
+
+.floating-contact-btn {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    background-color: #25D366;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    text-decoration: none;
+    z-index: 1001;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .chat-container { grid-template-columns: 240px 1fr; }
+    .right-sidebar { display: none; /* Or handle it differently */ }
+}
+
+@media (max-width: 768px) {
+    .chat-container { grid-template-columns: 1fr; }
+    .left-sidebar { display: none; /* Needs a toggle button */ }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة الدخول - Fergany AI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo-container">
+                <h1>Fergany AI</h1>
+                <p>بوابتك إلى عالم الذكاء الاصطناعي</p>
+            </div>
+
+            <div class="toggle-buttons">
+                <button id="member-btn" class="toggle-btn active">عضو</button>
+                <button id="admin-btn" class="toggle-btn">المدير</button>
+            </div>
+
+            <div id="member-login" class="login-form">
+                <input type="text" id="member-code" class="login-input" placeholder="أدخل كود الدخول المكون من 6 أرقام" maxlength="6">
+                <button id="member-login-btn" class="login-btn">دخول</button>
+                <p class="support-text">تواجه مشكلة؟ <a href="https://wa.me/201225860308" target="_blank">تواصل مع المطور</a></p>
+            </div>
+
+            <div id="admin-login" class="login-form" style="display: none;">
+                <input type="password" id="admin-password" class="login-input" placeholder="كلمة مرور المدير">
+                <button id="admin-login-btn" class="login-btn">دخول</button>
+            </div>
+             <p id="error-message" class="error-text"></p>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
+    <script src="js/firebase.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - Fergany AI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1><i class="fas fa-shield-alt"></i> لوحة تحكم Fergany AI</h1>
+            <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+        </header>
+
+        <nav class="admin-nav">
+            <button class="nav-tab active" data-tab="members-section"><i class="fas fa-users"></i> إدارة الأعضاء</button>
+            <button class="nav-tab" data-tab="announcements-section"><i class="fas fa-bullhorn"></i> إدارة الإعلانات</button>
+        </nav>
+
+        <main class="admin-main">
+            <!-- Members Section -->
+            <section id="members-section" class="admin-section active">
+                <div class="section-header">
+                    <h2>قائمة الأعضاء</h2>
+                    <button id="add-member-btn" class="action-btn"><i class="fas fa-user-plus"></i> إضافة عضو جديد</button>
+                </div>
+                <div class="table-container">
+                    <table class="members-table">
+                        <thead>
+                            <tr>
+                                <th>الاسم الثلاثي</th>
+                                <th>رقم الهاتف</th>
+                                <th>كود الدخول</th>
+                                <th>حالة Premium</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="members-tbody">
+                            <!-- Member rows will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Announcements Section -->
+            <section id="announcements-section" class="admin-section">
+                <div class="section-header">
+                    <h2>إنشاء إعلان جديد</h2>
+                </div>
+                <div class="announcement-form">
+                    <input type="text" id="announcement-title" placeholder="عنوان الإعلان">
+                    <textarea id="announcement-content" placeholder="محتوى الإعلان..."></textarea>
+                    <button id="send-announcement-btn" class="action-btn"><i class="fas fa-paper-plane"></i> إرسال الإعلان للجميع</button>
+                </div>
+                <hr>
+                <div class="section-header">
+                    <h2>الإعلانات الحالية</h2>
+                </div>
+                <div id="announcements-list">
+                    <!-- Announcements will be inserted here by JavaScript -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Member Modal -->
+    <div id="add-member-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2><i class="fas fa-user-plus"></i> إضافة عضو جديد</h2>
+            <input type="text" id="new-member-name" placeholder="الاسم الثلاثي للعضو" required>
+            <input type="tel" id="new-member-phone" placeholder="رقم هاتف العضو" required>
+            <button id="save-member-btn" class="action-btn">حفظ وإنشاء الكود</button>
+            <p id="modal-error" class="error-text"></p>
+        </div>
+    </div>
+
+    <script type="module" src="js/admin.js"></script>
+</body>
+</html>
